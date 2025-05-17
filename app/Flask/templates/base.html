@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Condé Nast SOC Reputation Check</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <style>
+        /* Quick in-page styling */
+        .malicious {
+            color: red;
+            font-weight: bold;
+        }
+        .suspicious {
+            color: orange;
+            font-weight: bold;
+        }
+        .vendor {
+            margin-left: 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .main-title {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 0;
+        }
+        .sub-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="main-title">Condé Nast</h1>
+        <h2 class="sub-title">SOC Reputation Check</h2>
+    </header>
+
+    <section>
+        <h2>Enter a URL for Reputation Check:</h2>
+        <form method="POST">
+            <label for="user_input">URL:</label>
+            <input type="text" id="user_input" name="user_input" placeholder="Enter URL" required>
+            <input type="submit" value="Check Reputation">
+        </form>
+    </section>
+
+    {% if result %}
+        <section>
+            <h2>Reputation Results</h2>
+            <ul>
+                {% for key, value in result.items() %}
+                    <li><strong>{{ key }}:</strong> 
+                        {% if key == 'WHOIS Lookup' %}
+                            {% if value.error %}
+                                <p>{{ value.error }}</p>
+                            {% else %}
+                                <ul>
+                                    {% for sub_key, sub_value in value.items() %}
+                                        <li><strong>{{ sub_key }}:</strong> {{ sub_value }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% elif key == 'VirusTotal' and value is mapping %}
+                            <p><strong>Malicious Vendors:</strong></p>
+                            <ul>
+                                {% for vendor in value.vendor_results %}
+                                    <li class="vendor {% if vendor.category == 'malicious' %}malicious{% elif vendor.category == 'suspicious' %}suspicious{% endif %}">
+                                        {{ vendor.vendor }} - {{ vendor.category|capitalize }} ({{ vendor.result }})
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <p><strong>Community Score:</strong> {{ value.community_score }}</p>
+                            <p><strong>Malicious Count:</strong> {{ value.malicious_count }}/{{ value.total_vendors }}</p>
+                            <p><strong>Suspicious Count:</strong> {{ value.suspicious_count }}/{{ value.total_vendors }}</p>
+                            <p><strong>Last Analysis Date:</strong> {{ value.last_analysis_date }}</p>
+                        {% else %}
+                            <p>{{ value }}</p>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    {% endif %}
+
+    <footer>
+        <p>Reputation Check Tool &copy; 2025</p>
+    </footer>
+</body>
+</html>

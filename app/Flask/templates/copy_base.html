@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reputation Check</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Reputation Check App</h1>
+    </header>
+
+    <section>
+        <h2>Enter a URL for Reputation Check:</h2>
+        <form method="POST">
+            <label for="user_input">URL:</label>
+            <input type="text" id="user_input" name="user_input" placeholder="Enter URL" required>
+            <input type="submit" value="Check Reputation">
+        </form>
+    </section>
+
+    {% if result %}
+        <section>
+            <h2>Reputation Results</h2>
+            <ul>
+                {% for key, value in result.items() %}
+                    <li><strong>{{ key }}:</strong> 
+                        {% if key == 'WHOIS Lookup' %}
+                            {% if value.error %}
+                                <p>{{ value.error }}</p>
+                            {% else %}
+                                <ul>
+                                    {% for sub_key, sub_value in value.items() %}
+                                        <li><strong>{{ sub_key }}:</strong> {{ sub_value }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% else %}
+                            <p>{{ value }}</p>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    {% endif %}
+
+    <footer>
+        <p>Reputation Check Tool &copy; 2025</p>
+    </footer>
+</body>
+</html>
+

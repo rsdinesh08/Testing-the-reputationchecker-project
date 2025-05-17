@@ -1,0 +1,103 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f4f4f9; /* Light background for the page */
+}
+
+/* Header styling */
+header {
+    background-color: #007bff; /* Blue background for the header */
+    color: white; /* White text color */
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+/* Header title (h1) styling */
+h1 {
+    color: #333; /* Dark grey color for the header text */
+    font-size: 2em;
+}
+
+/* Form container styling */
+form {
+    margin-top: 20px;
+    background-color: #ffffff; /* White background for the form */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light shadow around the form */
+}
+
+/* Label and input field styling */
+label, input {
+    margin: 5px 0;
+    display: block; /* Ensure each label and input is on a new line */
+}
+
+/* Text input field styling */
+input[type="text"] {
+    padding: 8px;
+    width: 100%; /* Make the input take up the full width of the form */
+    max-width: 300px; /* Limit the width of the input field */
+    border: 1px solid #ccc; /* Light border for the input field */
+    border-radius: 4px; /* Rounded corners for the input field */
+    box-sizing: border-box; /* Ensure padding doesn't affect the width */
+}
+
+/* Submit button styling */
+input[type="submit"] {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #28a745; /* Green background for the submit button */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #218838; /* Darker green when hovered */
+}
+
+/* Heading 2 (h2) styling */
+h2 {
+    color: #555; /* Medium grey for subheadings */
+}
+
+/* Paragraph styling */
+p {
+    font-size: 1.2em;
+    color: #007bff; /* Blue color for paragraphs */
+}
+
+/* Link styling */
+a {
+    color: #007bff; /* Blue color for links */
+    text-decoration: none; /* Remove underline */
+}
+
+a:hover {
+    text-decoration: underline; /* Underline links on hover */
+}
+
+/* Responsive styling for mobile */
+@media (max-width: 768px) {
+    body {
+        margin: 10px;
+    }
+
+    header {
+        padding: 10px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+    }
+
+    input[type="submit"] {
+        width: 100%;
+    }
+}
+
